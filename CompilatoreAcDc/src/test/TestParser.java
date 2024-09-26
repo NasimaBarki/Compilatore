@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import eccezioni.LexicalException;
 import eccezioni.SyntacticException;
 import parser.Parser;
 import scanner.Scanner;
@@ -21,7 +23,7 @@ class TestParser {
 		Parser parser = new Parser(scanner);
 
 		assertDoesNotThrow(() -> {
-			parser.parse();
+			System.out.println(parser.parse().toString());
 		});
 	}
 	
@@ -31,7 +33,7 @@ class TestParser {
 		Parser parser = new Parser(scanner);
 
 		assertDoesNotThrow(() -> {
-			parser.parse();
+			System.out.println(parser.parse().toString());
 		});
 	}
 	
@@ -124,12 +126,12 @@ class TestParser {
 	}
 	
 	@Test
-	void testSoloDichPrint1() throws FileNotFoundException {
+	void testSoloDichPrint1() throws SyntacticException, LexicalException, IOException {
 		Scanner scanner = new Scanner (percorso + "testSoloDichPrint1.txt");
 		Parser parser = new Parser(scanner);
 
 		assertDoesNotThrow(() -> {
-			parser.parse();
+			System.out.println(parser.parse().toString());
 		});
 	}
 }

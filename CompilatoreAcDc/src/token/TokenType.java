@@ -1,5 +1,10 @@
 package token;
 
+/**
+ * Tipi di token
+ * @author Nasima Barki
+ *
+ */
 public enum TokenType {
 	INT,
 	FLOAT,

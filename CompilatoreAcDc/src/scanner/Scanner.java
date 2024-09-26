@@ -12,6 +12,11 @@ import java.util.Map;
 import eccezioni.LexicalException;
 import token.*;
 
+/**
+ * Lo scanner deve cercare di riconoscere la stringa andando avanti il più possibile per poi ritornare un token..
+ * @author Nasima Barki
+ *
+ */
 public class Scanner {
 	final char EOF = (char) -1; 
 	private int riga;
@@ -34,6 +39,11 @@ public class Scanner {
 	// TokenType  corrispondente
 	Map<String, TokenType> keyWordsMap = new HashMap<>();
 
+	/**
+	 * costruisce un PushbackReader
+	 * @param fileName nome del file da leggere
+	 * @throws FileNotFoundException se il file non esiste
+	 */
 	public Scanner(String fileName) throws FileNotFoundException {
 
 		this.buffer = new PushbackReader(new FileReader(fileName));
@@ -71,6 +81,12 @@ public class Scanner {
 		keyWordsMap.put("int", TokenType.TYINT);
 	}
 	
+	/**
+	 *  legge il prossimo token senza consumare il carattere
+	 * @return il prossimo token
+	 * @throws LexicalException se ci sono errori di sintassi
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	public Token peekToken() throws LexicalException, IOException {
 		if (nextTk == null) {
 			nextTk = nextToken();
@@ -79,6 +95,12 @@ public class Scanner {
 		return nextTk;
 	}
 
+	/**
+	 * 	legge il prossimo token e lo restituisce
+	 * @return il prossimo token letto
+	 * @throws LexicalException se ci sono errori di sintassi
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	public Token nextToken() throws LexicalException, IOException  {
 
 		while (nextTk == null) {
@@ -145,6 +167,12 @@ public class Scanner {
 		
 	}
 
+	/**
+	 *  legge un numero intero o un numero float e lo restituisce
+	 * @return un numero intero o un numero float
+	 * @throws LexicalException se ci sono errori di sintassi
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	// private Token scanNumber()
 	private Token scanNumber() throws LexicalException, IOException {
 		char nextChar;
@@ -193,6 +221,12 @@ public class Scanner {
 		throw new LexicalException("Il numero '" + value + "' a riga " + riga + " non è valido.");
 	}
 
+	/**
+	 *   legge un operatore e lo restituisce
+	 * @return un operatore
+	 * @throws LexicalException se ci sono errori di sintassi
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	private Token scanOp() throws LexicalException, IOException {
 		char nextChar;
 		String value = "";
@@ -225,6 +259,12 @@ public class Scanner {
 			throw new LexicalException("L'operatore '" + value + "' a riga " + riga + " non è ammissibile.");
 	}
 
+	/**
+	 *   legge un identificatore e lo restituisce
+	 * @return un identificatore
+	 * @throws LexicalException se ci sono errori di sintassi
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	// private Token scanId()
 	private Token scanId() throws LexicalException, IOException {
 		char nextChar;
@@ -257,10 +297,20 @@ public class Scanner {
 			return new Token(TokenType.ID, riga, value);
 	}
 
+	/**
+	 *   legge un carattere e lo restituisce
+	 * @return un carattere
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	private char readChar() throws IOException {
 		return ((char) this.buffer.read());
 	}
 
+	/**
+	 *   legge un carattere e lo restituisce senza consumarlo
+	 * @return un carattere
+	 * @throws IOException se ci sono errori di I/O
+	 */
 	private char peekChar() throws IOException {
 		char c = (char) buffer.read();
 		buffer.unread(c);
